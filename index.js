@@ -11,9 +11,9 @@ const runForrest = () => {
     } else {
         console.log(`waiting for worker ${workerData.name} ${threadId} to finish!`);
         console.log(isMainThread);
-        setTimeout(() => {
-            console.log(`worker ${workerData.name} finished!`);
-        }, 5000);
+        // setTimeout(() => {
+        //     console.log(`worker ${workerData.name} finished!`);
+        // }, 5000);
     }
 };
 

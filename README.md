@@ -24,3 +24,97 @@ Interestingly enough, it seems to always add 6 additional workers and this seems
 even when i add 12 workers:
 
 ![alt text](https://github.com/opposite-bracket/threads-with-nodejs/blob/master/imgs/main-thread-with-12-thread.png?raw=true "htop running program with 12 worker")
+
+## Order of execution completion
+
+Now, i was curious to see how would the workers finish if i wasn't to have a setTimeout so here's the result i've got after a few tries:
+
+### Try #1
+
+```
+$ node index.js 
+waiting for worker thread0 1 to finish!
+false
+waiting for worker thread2 3 to finish!
+false
+waiting for worker thread3 4 to finish!
+false
+waiting for worker thread4 5 to finish!
+false
+waiting for worker thread6 7 to finish!
+false
+waiting for worker thread9 10 to finish!
+false
+waiting for worker thread11 12 to finish!
+false
+waiting for worker thread1 2 to finish!
+false
+waiting for worker thread8 9 to finish!
+false
+waiting for worker thread5 6 to finish!
+false
+waiting for worker thread7 8 to finish!
+waiting for worker thread10 11 to finish!
+false
+false
+```
+
+### Try #2
+
+```
+$ node index.js 
+waiting for worker thread4 5 to finish!
+false
+waiting for worker thread8 9 to finish!
+false
+waiting for worker thread3 4 to finish!
+waiting for worker thread5 6 to finish!
+false
+waiting for worker thread0 1 to finish!
+false
+waiting for worker thread1 2 to finish!
+false
+waiting for worker thread2 3 to finish!
+false
+false
+waiting for worker thread6 7 to finish!
+false
+waiting for worker thread10 11 to finish!
+waiting for worker thread11 12 to finish!
+false
+waiting for worker thread7 8 to finish!
+false
+waiting for worker thread9 10 to finish!
+false
+false
+```
+
+### Try #3
+
+```
+$ node index.js 
+waiting for worker thread0 1 to finish!
+false
+waiting for worker thread1 2 to finish!
+false
+waiting for worker thread6 7 to finish!
+false
+waiting for worker thread2 3 to finish!
+false
+waiting for worker thread9 10 to finish!
+waiting for worker thread3 4 to finish!
+false
+false
+waiting for worker thread5 6 to finish!
+false
+waiting for worker thread7 8 to finish!
+waiting for worker thread10 11 to finish!
+false
+false
+waiting for worker thread8 9 to finish!
+false
+waiting for worker thread4 5 to finish!
+false
+waiting for worker thread11 12 to finish!
+false
+```
